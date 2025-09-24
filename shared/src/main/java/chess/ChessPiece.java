@@ -19,7 +19,7 @@ public class ChessPiece {
         this.type = type;
     }
 
-    public ChessPiece getFromChar(char c) {
+    public static ChessPiece getFromChar(char c) {
         ChessPiece.PieceType checkPieceType = switch (c) {
             case 'r' -> PieceType.ROOK;
             case 'R' -> PieceType.ROOK;
