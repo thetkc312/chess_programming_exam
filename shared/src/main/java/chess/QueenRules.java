@@ -10,7 +10,16 @@ public class QueenRules extends MoveRules {
     }
 
     @Override
-    HashSet<int[]> getPotentialMoves(ChessBoard boardState, ChessPosition activePosition) {
-        throw new RuntimeException("Not implemented");
+    HashSet<Movement> getPotentialMovements(ChessBoard boardState, ChessPosition activePosition) {
+        HashSet<Movement> potentialMovements = new HashSet<>(8);
+        potentialMovements.add(new Movement(-1, -1));
+        potentialMovements.add(new Movement(-1, 0));
+        potentialMovements.add(new Movement(-1, 1));
+        potentialMovements.add(new Movement(0, -1));
+        potentialMovements.add(new Movement(0, 1));
+        potentialMovements.add(new Movement(1, -1));
+        potentialMovements.add(new Movement(1, 0));
+        potentialMovements.add(new Movement(1, 1));
+        return potentialMovements;
     }
 }
