@@ -4,12 +4,16 @@ import java.util.HashSet;
 
 abstract class MoveRules {
 
-    final boolean unlimitedMovement;
+    final private boolean unlimitedMovement;
 
     abstract HashSet<Movement> getPotentialMovements(ChessBoard boardState, ChessPosition activePosition);
 
     MoveRules(boolean unlimitedMovement) {
         this.unlimitedMovement = unlimitedMovement;
+    }
+
+    public boolean hasUnlimitedMovement() {
+        return unlimitedMovement;
     }
 
     public boolean isValidMove(ChessBoard board, ChessPosition activePosition, ChessPosition targetPosition) {

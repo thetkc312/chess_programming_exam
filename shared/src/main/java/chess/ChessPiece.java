@@ -1,6 +1,7 @@
 package chess;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 
 /**
@@ -14,13 +15,13 @@ public class ChessPiece {
     private final ChessGame.TeamColor pieceColor;
     private final PieceType type;
 
-    public ChessPiece(ChessGame.TeamColor pieceColor, ChessPiece.PieceType type) {
+    public ChessPiece(ChessGame.TeamColor pieceColor, PieceType type) {
         this.pieceColor = pieceColor;
         this.type = type;
     }
 
     public static ChessPiece getFromChar(char c) {
-        ChessPiece.PieceType checkPieceType = switch (c) {
+        PieceType checkPieceType = switch (c) {
             case 'r' -> PieceType.ROOK;
             case 'R' -> PieceType.ROOK;
             case 'n' -> PieceType.KNIGHT;
@@ -102,7 +103,28 @@ public class ChessPiece {
      * @return Collection of valid moves
      */
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
-        throw new RuntimeException("Not implemented");
+        HashSet<ChessMove> validMoves = new HashSet<>();
+        MoveRules myRules = switch (board.getPiece(myPosition).getPieceType()) {
+            case QUEEN -> new QueenRules();
+            case BISHOP -> new QueenRules();
+            case ROOK -> new QueenRules();
+            case KING -> new QueenRules();
+            case KNIGHT -> new QueenRules();
+            case PAWN -> new QueenRules();
+        };
+        HashSet<Movement> potentialMovements = myRules.getPotentialMovements(board, myPosition);
+        for (Movement potentialMovement : potentialMovements) {
+            ChessPosition targetPosition = myPosition.getMovedPosition(potentialMovement);
+            while (myRules.isValidMove(board, myPosition, targetPosition)) {
+                // TODO: Implement promotion piece logic
+                validMoves.add(new ChessMove(myPosition, targetPosition, null));
+                if (!myRules.hasUnlimitedMovement() || myRules.isEnemyInPosition(board, myPosition, targetPosition)) {
+                    break;
+                }
+                targetPosition = targetPosition.getMovedPosition(potentialMovement);
+            }
+        }
+        return validMoves;
     }
 
     @Override
