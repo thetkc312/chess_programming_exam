@@ -106,10 +106,10 @@ public class ChessPiece {
         HashSet<ChessMove> validMoves = new HashSet<>();
         MoveRules myRules = switch (board.getPiece(myPosition).getPieceType()) {
             case QUEEN -> new QueenRules();
-            case BISHOP -> new QueenRules();
-            case ROOK -> new QueenRules();
-            case KING -> new QueenRules();
-            case KNIGHT -> new QueenRules();
+            case BISHOP -> new BishopRules();
+            case ROOK -> new RookRules();
+            case KING -> new KingRules();
+            case KNIGHT -> new KnightRules();
             case PAWN -> new QueenRules();
         };
         HashSet<Movement> potentialMovements = myRules.getPotentialMovements(board, myPosition);
