@@ -34,6 +34,14 @@ public class ChessPosition {
         return col;
     }
 
+    public ChessPosition getMovedPosition(Movement move) {
+        return new ChessPosition(row+move.getVertical(), col+ move.getHorizontal());
+    }
+
+    public boolean isOnBoard() {
+        return row >= 1 && row <= 8 && col >= 1 && col <= 8;
+    }
+
     @Override
     public String toString() {
         return String.format("[%s,%s]", row, col);
