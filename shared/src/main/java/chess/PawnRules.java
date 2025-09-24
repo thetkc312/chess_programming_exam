@@ -34,7 +34,14 @@ public class PawnRules extends MoveRules {
             }
 
         }
-        // TODO: Also check if moving diagonal is possible (must be an on-board enemy piece)
+        // Also check if moving diagonal is possible (must be an on-board enemy piece)
+        for (int leftRight : new int[]{-1,1}) {
+            Movement diagonalForward = new Movement(verticalDirection, leftRight);
+            targetPosition = activePosition.getMovedPosition(diagonalForward);
+            if (targetPosition.isOnBoard() && isEnemyInPosition(boardState, activePosition, targetPosition)) {
+                potentialMovements.add(diagonalForward);
+            }
+        }
         return potentialMovements;
     }
 }
