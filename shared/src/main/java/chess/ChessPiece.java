@@ -116,8 +116,14 @@ public class ChessPiece {
         for (Movement potentialMovement : potentialMovements) {
             ChessPosition targetPosition = myPosition.getMovedPosition(potentialMovement);
             while (myRules.isValidMove(board, myPosition, targetPosition)) {
-                // TODO: Implement promotion piece logic
-                validMoves.add(new ChessMove(myPosition, targetPosition, null));
+                if (board.getPiece(myPosition).getPieceType() == PieceType.PAWN && (targetPosition.getRow() == 1 || targetPosition.getRow() == 8)) {
+                    validMoves.add(new ChessMove(myPosition, targetPosition, PieceType.QUEEN));
+                    validMoves.add(new ChessMove(myPosition, targetPosition, PieceType.ROOK));
+                    validMoves.add(new ChessMove(myPosition, targetPosition, PieceType.BISHOP));
+                    validMoves.add(new ChessMove(myPosition, targetPosition, PieceType.KNIGHT));
+                } else {
+                    validMoves.add(new ChessMove(myPosition, targetPosition, null));
+                }
                 if (!myRules.hasUnlimitedMovement() || myRules.isEnemyInPosition(board, myPosition, targetPosition)) {
                     break;
                 }
