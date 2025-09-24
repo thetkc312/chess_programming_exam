@@ -110,7 +110,7 @@ public class ChessPiece {
             case ROOK -> new RookRules();
             case KING -> new KingRules();
             case KNIGHT -> new KnightRules();
-            case PAWN -> new QueenRules();
+            case PAWN -> new PawnRules();
         };
         HashSet<Movement> potentialMovements = myRules.getPotentialMovements(board, myPosition);
         for (Movement potentialMovement : potentialMovements) {
